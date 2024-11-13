@@ -81,6 +81,6 @@ Altogether, the bispectrum is a robust and computationally efficient tool for th
 
 # Acknowledgements
 
-We acknowledge contributions from... in the creation of this package.
+We acknowledge contributions from Mr. Toni M. Brotons and Dr. Timon Merk, who provided valuable feedback and suggestions for the design of the `PyBispectra` package and its documentation.
 
 # References
