@@ -61,7 +61,7 @@ Phase-amplitude coupling refers to the interaction between the phase of a lower 
 
 \autoref{fig:overview}
 
-## Time delay analysis
+## Time delay analysi
 
 Time delay analysis provides insight into the physical connections between brain regions by identifying latencies of information transfer between signals, complementing structural analyses using electrophysiology data [@Silchenko2010;@Binns2024]. A traditional approach for time delay analysis is cross-correlation, quantifying the similarity of signals at a set of time lags. However, there a two key limitations to this approach, including its limited robustness to noise in the data [@Nikias1988], as well as a vulnerability to spurious zero time lag interactions arising due to volume conduction and source mixing in the sensor space [@Chella2014]. On the other hand, the bispectrum is resilient to Gaussian noise sources in the data [@Nikias1988], and the process of antisymmetrisation can also be used to correct for spurious zero time lag interactions [@Chella2014]. `PyBispectra` provides tools for time delay analysis using the bispectrum, with options for antisymmetrisation, offering a robust method for the analysis of time delays in electrophysiology data.
 
