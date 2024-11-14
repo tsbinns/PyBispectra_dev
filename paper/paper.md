@@ -51,7 +51,7 @@ Analysis of phase-amplitude coupling, time delays, and non-sinusoidal waveshape 
 
 Despite these benefits, the bispectrum has seen relatively little use in the field of neuroscience, in part due to the lack of an accessible, easy-to-use toolbox tailored to electrophysiology data. Code written in MATLAB exists for some analyses (see e.g., [github.com/sccn/roiconnect](https://github.com/sccn/roiconnect), [github.com/ZuseDre1/AnalyzingWaveshapeWithBicoherence](https://github.com/ZuseDre1/AnalyzingWaveshapeWithBicoherence)), however it is spread across multiple repositories, and often not in the form of a toolbox. Furthermore, use of this code requires a paid MATLAB license, limiting its accessibility. Code for computing the bispectrum does exist in the free-to-use Python language - e.g., @Bachetti2024 - however these implementations are not tailored to use with electrophysiology data. The `PyBispectra` package addressed these problems by providing a single, comprehensive toolbox for bispectral analysis of electrophysiology data (\autoref{fig:overview}), including tutorials to facilitate an understanding of these analyses in the context of neuroscience research.
 
-![Overview of the `PyBispectra` toolbox.\label{fig:overview}](Overview.png)
+![Overview of the `PyBispectra` toolbox.\label{fig:overview}](Overview.svg)
 
 # Features
 
