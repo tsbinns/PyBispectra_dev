@@ -16,6 +16,9 @@ authors:
   - name: Tin Jurhar
     orcid: 0000-0002-8804-2349
     affiliation: "5, 6"
+  - name: Tien D. Nguyen
+    orcid: 0009-0008-9867-0964
+    affiliation: "3, 4"
   - name: Richard M. Köhler
     orcid: 0000-0002-5219-1289
     affiliation: 1
