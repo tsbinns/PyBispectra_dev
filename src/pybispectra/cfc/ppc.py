@@ -14,8 +14,8 @@ class PPC(_ProcessFreqBase):
 
     Parameters
     ----------
-    data : ~numpy.ndarray of float, shape of [epochs, channels, frequencies (, times)]
-        Fourier coefficients.
+    data : ~numpy.ndarray of float, shape of [epochs, channels, frequencies, times]
+        Time-frequency Fourier coefficients.
 
     freqs : ~numpy.ndarray of float, shape of [frequencies]
         Frequencies (in Hz) in ``data``. Frequencies are expected to be evenly
@@ -208,7 +208,7 @@ def _compute_ppc(
     Parameters
     ----------
     data : numpy.ndarray, shape of [epochs, 2, frequencies, times]
-        FFT coefficients where the second dimension contains the data for the seed and
+        TFR coefficients where the second dimension contains the data for the seed and
         target channel of a single connection, respectively.
 
     freqs : numpy.ndarray, shape of [frequencies]
@@ -241,22 +241,22 @@ def _compute_ppc(
         for f2_ri, f2_fi in enumerate(range(f2_start, f2_end + 1)):
             f2 = freqs[f2_fi]
             if f1 < f2 and f1 > 0:
-                fft_f1 = data[:, 0, f1_fi]
-                fft_f2 = data[:, 1, f2_fi]
-                numerator = np.abs(
-                    (
-                        np.abs(fft_f1)
-                        * np.abs(fft_f2)
-                        * np.exp(
-                            1j
-                            * (
-                                np.angle(fft_f1, True) * (f2 / f1)
-                                - np.angle(fft_f2, True)
-                            )
-                        )
-                    ).mean()
-                )
-                denominator = np.mean((np.abs(fft_f1) * np.abs(fft_f2)))
-                results[f1_ri, f2_ri] = numerator / denominator
+                results[f1_ri, f2_ri] = 0
+                for epoch_data in data:
+                    tfr_f1 = epoch_data[0, f1_fi]
+                    tfr_f2 = epoch_data[1, f2_fi]
+                    amp_f1 = np.real(tfr_f1 * np.conj(tfr_f1))
+                    amp_f2 = np.real(tfr_f2 * np.conj(tfr_f2))
+                    phase_f1 = np.angle(tfr_f1, True)
+                    phase_f2 = np.angle(tfr_f2, True)
+                    numerator = np.abs(
+                        (
+                            amp_f1
+                            * amp_f2
+                            * np.exp(1j * (phase_f1 * (f2 / f1) - phase_f2))
+                        ).mean()  # average over times
+                    )
+                    denominator = (amp_f1 * amp_f2).mean()  # average over times
+                    results[f1_ri, f2_ri] += numerator / denominator
 
-    return results
+    return np.divide(results, data.shape[0]).astype(precision)
