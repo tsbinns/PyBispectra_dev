@@ -65,8 +65,8 @@ class TDE(_ProcessBispectrum):
     TDE with the bispectrum requires the Fourier coefficients of the negative
     frequencies of the original signals, however since these are expected to be
     real-valued, they can be inferred from the positive frequencies. Accordingly, only
-    the coefficients corresponding to the zero and *all* positive frequencies should be
-    passed to ``data``.
+    the coefficients corresponding to the zero frequency and *all* positive frequencies
+    should be passed to ``data``.
 
     It is recommended to compute the Fourier coefficients with ``n_points = 2 * n_times
     + 1``. Using a smaller number of points than this will reduce the time range in
