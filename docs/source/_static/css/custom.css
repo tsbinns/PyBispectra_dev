@@ -25,7 +25,7 @@ div.versionadded {
 }
 
 /* when FF supports :has(), change to →  dd > p:has(+div.versionadded) */
-dd>p {
+dd>p:has(+div.versionadded) {
     display: inline;
 }
 
