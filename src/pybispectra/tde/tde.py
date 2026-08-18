@@ -67,6 +67,11 @@ class TDE(_ProcessBispectrum):
     the coefficients corresponding to the zero and positive frequencies should be passed
     to ``data``.
 
+    .. note::
+        Frequencies are expected to span the full set of positive frequencies in the
+        0 - Nyquist range. Failure to provide the full set of frequencies will lead to
+        invalid results.
+
     It is recommended to compute the Fourier coefficients with ``n_points = 2 * n_times
     + 1``. Using a smaller number of points than this will reduce the time range in
     which a delay estimate can be generated below that of the length of the epochs.
