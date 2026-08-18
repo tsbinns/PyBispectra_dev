@@ -3,6 +3,7 @@
 from collections.abc import Callable
 from copy import deepcopy
 from typing import ClassVar
+from warnings import warn
 
 import numpy as np
 from numba import njit
@@ -64,13 +65,8 @@ class TDE(_ProcessBispectrum):
     TDE with the bispectrum requires the Fourier coefficients of the negative
     frequencies of the original signals, however since these are expected to be
     real-valued, they can be inferred from the positive frequencies. Accordingly, only
-    the coefficients corresponding to the zero and positive frequencies should be passed
-    to ``data``.
-
-    .. note::
-        Frequencies are expected to span the full set of positive frequencies in the
-        0 - Nyquist range. Failure to provide the full set of frequencies will lead to
-        invalid results.
+    the coefficients corresponding to the zero and *all* positive frequencies should be
+    passed to ``data``.
 
     It is recommended to compute the Fourier coefficients with ``n_points = 2 * n_times
     + 1``. Using a smaller number of points than this will reduce the time range in
@@ -125,6 +121,15 @@ class TDE(_ProcessBispectrum):
         """Check the freqs. are appropriate and add the negative freqs."""
         if self.freqs[0] != 0.0:
             raise ValueError("The first entry of `freqs` must be 0.")
+        nyquist = self.sampling_freq / 2
+        freq_step = np.diff(self.freqs).max()  # already checked they are ~evenly spaced
+        if np.abs(nyquist - self.freqs[-1]) >= freq_step:
+            warn(
+                "The last entry of `freqs` should be the Nyquist frequency. Expected "
+                f"~{nyquist}, but got {self.freqs[-1]}. This may lead to invalid "
+                "results.",
+                UserWarning,
+            )
 
         self._data = np.concatenate(
             (self._data, np.conjugate(self._data[..., 1:][..., ::-1])), axis=2
